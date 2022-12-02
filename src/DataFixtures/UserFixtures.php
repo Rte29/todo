@@ -23,6 +23,7 @@ class UserFixtures extends Fixture
         $manager->persist($admin);
 
         $faker = Factory::create('fr_FR');
+
         for ($i = 1; $i <= 15; $i++) {
             $user = new User();
             $user->setEmail($faker->email);

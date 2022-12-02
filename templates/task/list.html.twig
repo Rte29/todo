@@ -8,7 +8,7 @@
 	<div class="row">
 		{% for task in tasks %}
 			<div class="col-sm-4 col-lg-4 col-md-4">
-				<div class="thumbnail">
+				<div class="img-thumbnail rounded">
 					<div class="caption">
 						<h4 class="pull-right">
 							{% if task.isDone %}
@@ -19,6 +19,8 @@
 						</h4>
 						<h4>
 							<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a>
+							<i class="h5">auteur :
+								{{ task.user.username }}</i>
 						</h4>
 						<p>{{ task.content }}</p>
 					</div>
