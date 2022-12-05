@@ -29,13 +29,22 @@ class UserType extends AbstractType
             ])
             ->add('email', EmailType::class, ['label' => 'Adresse email'])
             ->add('roles', ChoiceType::class, [
-                'multiple' => true,
-                'expanded' => false,
+                'multiple' => false,
+                'expanded' => true,
                 'choices' => [
                     'User' => 'ROLE_USER',
                     'Admin' => 'ROLE_ADMIN'
                 ],
             ]);
+        $builder->get('roles')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($rolesArray) {
+                    return \count($rolesArray) ? $rolesArray[0] : null;
+                },
+                function ($rolesString) {
+                    return [$rolesString];
+                }
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
