@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,10 +16,17 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks", name="task_list")
      */
-    public function listAction(EntityManagerInterface $em)
+    public function listAction(EntityManagerInterface $em, Request $request, PaginatorInterface $paginator): Response
     {
         $repo = $em->getRepository(Task::class);
-        return $this->render('task/list.html.twig', ['tasks' => $repo->findAll()]);
+        $task = $repo->findBy([], ['createdAt' => 'DESC']);
+
+        $taskAll = $paginator->paginate($task, $request->query->getInt('page', 1), 6);
+
+        return $this->render('task/list.html.twig', [
+            'controller_name' => 'TaskController',
+            'tasks' => $taskAll
+        ]);
     }
 
     /**

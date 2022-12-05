@@ -4,11 +4,15 @@
 {% endblock %}
 
 {% block body %}
-	<a href="{{ path('task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
+
+	<div class="row">
+		<a href="{{ path('task_create') }}" class="btn btn-info">Créer une tâche</a><br>
+	</div>
+
 	<div class="row">
 		{% for task in tasks %}
 			<div class="col-sm-4 col-lg-4 col-md-4">
-				<div class="img-thumbnail rounded">
+				<div class="img-thumbnail rounded  my-3">
 					<div class="caption">
 						<h4 class="pull-right">
 							{% if task.isDone %}
@@ -18,21 +22,23 @@
 							{% endif %}
 						</h4>
 						<h4>
-							<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a>
+							<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a><br>
 							<i class="h5">auteur :
 								{{ task.user.username }}</i>
 						</h4>
-						<p>{{ task.content }}</p>
+						<p>{{ task.content[:80] ~ '...' }}</p>
 					</div>
 					<div>
 						<form action="{{ path('task_toggle', {'id' : task.id }) }}">
-							<button class="btn btn-success btn-sm pull-right">
+							<button class="btn btn-success btn-sm pull-right m-2">
 								{% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée
 								{% endif %}
 							</button>
 						</form>
 						<form action="{{ path('task_delete', {'id' : task.id }) }}">
-							<button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+							<button class="btn btn-danger btn-sm pull-right m-2">
+								<span class="glyphicon glyphicon-trash"></span>
+								Supprimer</button>
 						</form>
 					</div>
 				</div>
@@ -43,5 +49,7 @@
 				<a href="{{ path('task_create') }}" class="btn btn-warning pull-right">Créer une tâche</a>
 			</div>
 		{% endfor %}
+		{{ knp_pagination_render(tasks) }}
 	</div>
+
 {% endblock %}
