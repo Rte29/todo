@@ -44,7 +44,6 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $hashedPassword = $this->hasher->hashPassword($user, $form->get('plainPassword')->getData());
             $user->setPassword($hashedPassword);
-            $user->setRoles(['ROLE_USER']);
 
             $em->persist($user);
             $em->flush();
@@ -66,9 +65,13 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
+        //dd($user);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $hashedPassword = $this->hasher->hashPassword($user, 'password');
+            $hashedPassword = $this->hasher->hashPassword($user, $form->get('plainPassword')->getData());
             $user->setPassword($hashedPassword);
+
+            $em->persist($user);
             $em->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
