@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Créez une tâche !
+{% endblock %}
 {% block body %}
-	<div class="row">
+	<div class="row" style="box-shadow: 5px 3px 3px grey; border: solid .1rem grey">
 		{{ form_start(form, {'action' : path('task_create')}) }}
 		{{ form_widget(form) }}
 
-		<button type="submit" class="btn btn-success pull-right">Ajouter</button>
-		<a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
+		<button type="submit" class="btn btn-success pull-right" style="box-shadow: 5px 3px 3px grey;">Ajouter</button>
+		<a href="{{ path('task_list') }}" class="btn btn-primary" style="box-shadow: 5px 3px 3px grey;">Retour à la liste des tâches</a>
 		{{ form_end(form) }}
 	</div>
 {% endblock %}

@@ -5,38 +5,38 @@
 
 {% block body %}
 
-	<div class="row">
-		<a href="{{ path('task_create') }}" class="btn btn-info">Créer une tâche</a><br>
+	<div class="row col-3 ps-0">
+		<a href="{{ path('task_create') }}" class="btn btn-info" style="box-shadow: 5px 5px 5px lightblue;">Créer une tâche</a><br>
 	</div>
 
 	<div class="row">
 		{% for task in tasks %}
 			<div class="col-sm-4 col-lg-4 col-md-4">
-				<div class="img-thumbnail rounded  my-3">
-					<div class="caption">
-						<h4 class="pull-right">
-							{% if task.isDone %}
-								<span class="glyphicon glyphicon-ok"></span>
-							{% else %}
-								<span class="glyphicon glyphicon-remove"></span>
-							{% endif %}
-						</h4>
-						<h4>
+				<div class="img-thumbnail rounded my-3" style="box-shadow: 5px 5px 5px grey;">
+					<div class="d-flex">
+						<h4 class="col-11 ps-2">
 							<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a><br>
 							<i class="h5">auteur :
 								{{ task.user.username }}</i>
 						</h4>
-						<p>{{ task.content[:80] ~ '...' }}</p>
+						<h4 class="col me-auto">
+							{% if task.isDone %}
+								<span class="bi-check"></span>
+							{% else %}
+								<span class="bi-file"></span>
+							{% endif %}
+						</h4>
 					</div>
-					<div>
+					<p class="ps-2" style="min-height: 50px">{{ task.content[:80] ~ '...' }}</p>
+					<div class="d-flex">
 						<form action="{{ path('task_toggle', {'id' : task.id }) }}">
-							<button class="btn btn-success btn-sm pull-right m-2">
+							<button class="btn btn-success btn-sm pull-right m-2" style="box-shadow: 5px 3px 3px grey;">
 								{% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée
 								{% endif %}
 							</button>
 						</form>
 						<form action="{{ path('task_delete', {'id' : task.id }) }}">
-							<button class="btn btn-danger btn-sm pull-right m-2">
+							<button class="btn btn-danger btn-sm m-2" style="box-shadow: 5px 3px 3px grey;">
 								<span class="glyphicon glyphicon-trash"></span>
 								Supprimer</button>
 						</form>

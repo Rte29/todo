@@ -1,35 +1,68 @@
 <!-- Navigation-->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<div class="container px-5">
-		<a class="navbar-brand" href="#">To Do List app</a>
-		<a class="navbar-brand" href="#"><img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"/></a>
+<nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+	<div class="container-fluid">
+
+		<a class="navbar-brand" href="{{ path('app_default') }}"><img class="me-2" src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"/>
+			<strong>To Do List app</strong>
+		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+			<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_default')}}">Accueil</a>
+					<a class="nav-link active" aria-current="page" href="{{ path('app_default') }}">Accueil</a>
 				</li>
-				<li>
-					<a class="nav-link" href="{{ path('task_list')}}">La liste des tâches</a>
-				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Les tâches</a>
 
-				<li>
-					<a class="nav-link" href="{{ path('task_create')}}">Ajouter une Tâche</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a class="dropdown-item" href="{{ path('task_list') }}">Liste des tâches</a>
+						</li>
+						<li><hr class="dropdown-divider"></li>
+						<li>
+							<a class="dropdown-item" href="{{ path('task_create') }}">Ajouter une tâche</a>
+						</li>
+					</ul>
 				</li>
-
 				{% if app.user %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_logout')}}" onclick="return confirm('Vous allez être déconnecté')">Me déconnecter</a>
+					<li>
+						<a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
 					</li>
-					{% else%}
+
+
+				{% endif %}
+				{% if not app.user and 'login' != app.request.attributes.get('_route') %}
 					<li class="nav-item dropdown">
-						<a class="nav-link" id="navbarDropdown" href="{{ path('login')}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Se connecter</a>
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Connexion</a>
+
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" href="{{ path('login') }}">S'identifier</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item" href="{{ path('user_create') }}">S'enregistrer</a>
+							</li>
+						</ul>
 					</li>
 				{% endif %}
-			</ul>
-		</div>
-	</div>
-</nav>
+			</li>
+		</ul>
+		<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+			{% if app.user %}
+				<li class="nav-item ml-auto">
+					<a class="nav-link me-5" href="#">
+						<h5>Bonjour
+							{{ app.user.username }}</h5>
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+		<!-- <form class="d-flex" role="search">
+																																																																																																																																																																																																														<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+																																																																																																																																																																																																														<button class="btn btn-outline-success" type="submit">Search</button> -->
+	</form>
+</div></div></nav>
