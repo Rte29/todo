@@ -8,6 +8,10 @@
 {% block body %}
 	<div class="row">
 		{{ form_start(form, {'action' : path('user_create')}) }}
+		{% if not is_granted('ROLE_ADMIN') %}
+			{{ form_widget(form.roles, { 'attr': {'class': "d-none"} }) }}
+		{% endif %}
+		
 		{{ form_widget(form) }}
 
 		<button type="submit" class="btn btn-success pull-right">Ajouter</button>
