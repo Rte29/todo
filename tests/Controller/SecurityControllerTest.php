@@ -33,7 +33,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertRouteSame('app_default');
     }
 
-    public function testLogOut()
+    public function testLogout()
     {
         $client = static::createClient();
 

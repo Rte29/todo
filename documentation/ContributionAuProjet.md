@@ -5,7 +5,7 @@ Guide à l'usage de l'équipe qui reprendra ce projet pour une bonne cohésion d
 
 Avant propos
 - Le projet fonctionne sur PHP 8.1.8
-- Le projet est basé sur le framework symfony 6.1.* (Doctrine, Twig et PhpUnit)
+- Le projet est basé sur le framework symfony 6.1.7 (Doctrine, Twig et PhpUnit)
 - Clone projet : `git clone https://github.com/Rte29/todo.git
 
 1.Contribuer au projet

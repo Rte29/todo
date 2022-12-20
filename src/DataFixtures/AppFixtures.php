@@ -54,6 +54,14 @@ class AppFixtures extends Fixture
 
         $tasks = [];
 
+        $task = new Task();
+        $task->setTitle('titleTest');
+        $task->setContent('contentTest');
+        $task->setUser($users[mt_rand(0, count($users) - 1)]);
+
+        $tasks[] = $task;
+        $manager->persist($task);
+
         for ($i = 1; $i <= 15; $i++) {
             $task = new Task();
             $task->setTitle($faker->word());

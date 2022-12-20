@@ -3,7 +3,7 @@
 Améliorez une application existante de ToDo & Co
 
 ////// Environnement utilisé durant le développement: ////////
-Symfony 5.4.1 Composer 2.3.10 PhpMyAdmin 5.1.2 Symfony CLI 5.4.17 PHP 8.1.8 MySQL 5.7.36
+Symfony 6.1.7 Composer 2.3.10 PhpMyAdmin 5.1.2 Symfony CLI 5.4.17 PHP 8.1.8 MySQL 5.7.36
 
 /////// Installation: ///////////
 
@@ -20,3 +20,5 @@ Appliquer les migrations des entités: php bin/console doctrine:migrations:migra
 Chargez les fixtures du projet : php bin/console doctrine:fixtures:load
 
 Lancer le serveur local: symfony serve
+
+Félicitations le projet est installé correctement, vous pouvez désormais commencer à l'utiliser à votre guise !

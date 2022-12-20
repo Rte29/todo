@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Task;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManager;
 use App\Repository\UserRepository;
@@ -36,6 +37,7 @@ class UserController extends AbstractController
     public function createAction(Request $request, EntityManagerInterface $em): Response
     {
         $user = new User();
+        $user->setRoles(['ROLE_USER']);
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -43,7 +45,6 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $hashedPassword = $this->hasher->hashPassword($user, $form->get('plainPassword')->getData());
             $user->setPassword($hashedPassword);
-
             $em->persist($user);
             $em->flush();
 
@@ -63,8 +64,6 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
-        //dd($user);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $hashedPassword = $this->hasher->hashPassword($user, $form->get('plainPassword')->getData());
             $user->setPassword($hashedPassword);
@@ -78,5 +77,25 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
+    }
+    #[Route('/tasks/{id}/toggle', name: 'task_toggle')]
+    public function toggleTaskAction(Task $task, EntityManagerInterface $em)
+    {
+        $task->toggle(!$task->IsisDone());
+        $em->flush();
+
+        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+
+        return $this->redirectToRoute('task_list');
+    }
+
+    #[Route('/users/{id}/delete', name: 'user_delete')]
+    #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits')]
+    public function deleteTaskAction(User $user, EntityManagerInterface $em)
+    {
+        $em->remove($user);
+        $em->flush();
+
+        return $this->redirectToRoute('user_list');
     }
 }

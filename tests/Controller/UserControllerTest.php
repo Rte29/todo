@@ -2,7 +2,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\Controller\SecurityControllerTest;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
@@ -35,23 +35,21 @@ class UserControllerTest extends WebTestCase
 
     public function testCreateAction()
     {
-
         $crawler = $this->client->request('GET', '/users/create');
         static::assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        // Test if creation page field exists
-        //static::assertSame(1, $crawler->filter('input[name="user[username]"]')->count());
-        //static::assertSame(1, $crawler->filter('input[name="user[password][first]"]')->count());
-        //static::assertSame(1, $crawler->filter('input[name="user[password][second]"]')->count());
-        //static::assertSame(1, $crawler->filter('input[name="user[email]"]')->count());
-        //static::assertSame(2, $crawler->filter('input[name="user[roles][]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[username]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[plainPassword][first]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[plainPassword][second]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[email]"]')->count());
+
 
         $form = $crawler->selectButton('Ajouter')->form();
         $form['user[username]'] = 'newuser';
-        $form['user[password][first]'] = 'test';
-        $form['user[password][second]'] = 'test';
+        $form['user[plainPassword][first]'] = 'password';
+        $form['user[plainPassword][second]'] = 'password';
         $form['user[email]'] = 'test@test.fr';
-        $form['user[roles][0]']->tick();
+
         $this->client->submit($form);
         static::assertSame(302, $this->client->getResponse()->getStatusCode());
 
@@ -66,15 +64,23 @@ class UserControllerTest extends WebTestCase
         $urlGenerator = $this->client->getContainer()->get('router');
         $em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $user = $em->getRepository(User::class)->findOneBy(['username' => 'admin']);
+        $user = $em->getRepository(User::class)->findOneBy(['username' => 'newuser']);
 
         $crawler = $this->client->request('GET', $urlGenerator->generate('user_edit', ['id' => $user->getId()]));
 
         static::assertSame(200, $this->client->getResponse()->getStatusCode());
 
+        static::assertSame(1, $crawler->filter('input[name="user[username]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[plainPassword][first]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[plainPassword][second]"]')->count());
+        static::assertSame(1, $crawler->filter('input[name="user[email]"]')->count());
+
         $form = $crawler->selectButton('Modifier')->form();
-        $form['task[title]'] = 'nouveau titre';
-        $form['task[content]'] = 'nouveau contenu de tâche pour test';
+        $form['user[username]'] = 'username2';
+        $form['user[plainPassword][first]'] = 'password';
+        $form['user[plainPassword][second]'] = 'password';
+        $form['user[email]'] = 'email@test.fr';
+
         $this->client->submit($form);
         static::assertSame(302, $this->client->getResponse()->getStatusCode());
 
@@ -89,10 +95,12 @@ class UserControllerTest extends WebTestCase
         $urlGenerator = $this->client->getContainer()->get('router');
         $em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $task = $em->getRepository(Task::class)->findOneBy(['title' => 'nouveau titre']);
+        $task = $em->getRepository(User::class)->findOneBy(['username' => 'username2']);
 
-        $crawler = $this->client->request('GET', $urlGenerator->generate('task_delete', ['id' => $task->getId()]));
+        $crawler = $this->client->request('GET', $urlGenerator->generate('user_delete', ['id' => $task->getId()]));
 
         static::assertSame(302, $this->client->getResponse()->getStatusCode());
+        $crawler = $this->client->followRedirect();
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }
