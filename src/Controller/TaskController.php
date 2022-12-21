@@ -60,7 +60,7 @@ class TaskController extends AbstractController
     public function createAction(Request $request, EntityManagerInterface $em)
     {
 
-        if ($this->getUser() == null) {
+        if ($this->getUser() === null) {
             $this->addFlash('alert', 'Connectez-vous pour ajouter une tâche');
             return $this->redirectToRoute('login');
         }
