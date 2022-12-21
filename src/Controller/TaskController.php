@@ -96,8 +96,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //dump($task->getUser());
-            //dd($user);
+
             if ($user === $task->getUser() || (($task->getUser()->getUsername() === "anonymous") && ($user->getRoles()[0] === "ROLE_ADMIN"))) {
 
                 $em->flush();
