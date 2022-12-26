@@ -25,11 +25,18 @@
 						<li>
 							<a class="dropdown-item" href="{{ path('task_create') }}">Ajouter une tâche</a>
 						</li>
+						<li><hr class="dropdown-divider">
+							<a class="dropdown-item" href="{{ path('task_list_todo') }}">Liste des tâches à faire</a>
+						</li>
+						<li><hr class="dropdown-divider"></li>
+						<li>
+							<a class="dropdown-item" href="{{ path('task_list_isDone') }}">Liste des tâches terminées</a>
+						</li>
 					</ul>
 				</li>
-				
+
 				{% if is_granted('ROLE_ADMIN') %}
-    				<li class="nav-item dropdown">
+					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
 
 						<ul class="dropdown-menu">
@@ -88,7 +95,7 @@
 		</ul>
 
 		<!-- <form class="d-flex" role="search">
-																																																																																																																																																																																																																																														<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-																																																																																																																																																																																																																																														<button class="btn btn-outline-success" type="submit">Search</button> -->
+																																																																																																																																																																																																																																																		<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+																																																																																																																																																																																																																																																		<button class="btn btn-outline-success" type="submit">Search</button> -->
 	</form>
 </li></div></div></nav>

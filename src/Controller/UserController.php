@@ -5,16 +5,13 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Task;
 use App\Form\UserType;
-use Doctrine\ORM\EntityManager;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
@@ -28,7 +25,7 @@ class UserController extends AbstractController
 
     #[Route('/users', name: 'user_list')]
     #[IsGranted('ROLE_ADMIN', message: 'Vous n\'avez pas les droits')]
-    public function listAction(EntityManagerInterface $em, UserRepository $userRepository)
+    public function listAction(UserRepository $userRepository)
     {
         return $this->render('user/list.html.twig', ['users' => $userRepository->findAll()]);
     }
