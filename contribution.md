@@ -36,8 +36,8 @@ Avant propos
     	- Commit Correctement commentés
     	- Issue Correctement commentées et documentées
     	- pull Request OBLIGATOIRE
-    	- Seul le chef de projet peut faire un "merge" sur "master" après révision de votre code.
-    	- Faire un update sur le code principal : git pull origin master
+    	- Seul le chef de projet peut faire un "merge" sur "main" après révision de votre code.
+    	- Faire un update sur le code principal : git pull origin main
 
 	d.Tests unitaires et fonctionnels
     	- PhpUnit est à votre disposition pour créer vos tests
