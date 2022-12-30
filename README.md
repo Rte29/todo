@@ -11,9 +11,18 @@ Clonez ou téléchargez le repository GitHub dans le dossier voulu : git clone h
 
 Configurez vos variables d'environnement tel que la connexion à la base de données dans le fichier .env
 
-Téléchargez et installez les dépendances du projet avec Composer : composer install
+Téléchargez et installez les dépendances du projet avec Composer : 
 
-Créez la base de données dans le répertoire du projet : php bin/console doctrine:database:create
+```text
+composer install
+```
+
+Créez la base de données dans le répertoire du projet : 
+
+```text
+php bin/console doctrine:database:create
+```
+
 
 Appliquer les migrations des entités: php bin/console doctrine:migrations:migrate
 
